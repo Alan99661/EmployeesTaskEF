@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace EmployeeTask.Models.Entities
 {
-    internal class Employee : BaseModel
+    public class Employee : BaseModel
     {
         public string FullName { get; set; }
         public DateTime Birthday { get; set; }
         public decimal Salary { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public ICollection<Task> Tasks { get; set; }
+        public ICollection<TaskEnt> Tasks { get; set; }
     }
 }

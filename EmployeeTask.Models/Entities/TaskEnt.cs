@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EmployeeTask.Models.Abstactions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeTask.Models.Entities
 {
-    internal class Task
+    public class TaskEnt : BaseModel
     {
         public string Title { get; set; }
         public string Description { get; set; }
