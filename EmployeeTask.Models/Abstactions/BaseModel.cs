@@ -7,7 +7,7 @@ namespace EmployeeTask.Models.Abstactions
     {
         public BaseModel() 
         {
-            Id = new Guid().ToString();
+            Id = Guid.NewGuid().ToString();
         }
         public string Id { get;internal set; }
     }
