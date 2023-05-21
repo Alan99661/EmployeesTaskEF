@@ -9,8 +9,9 @@ builder.Services.AddRazorPages();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
     throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
 builder.Services.AddDbContext<EmployeeTaskDbContext>(options => options.UseSqlServer(connectionString));
-builder.Services.AddAutoMapper(typeof(MapperConfiguration));
+//builder.Services.AddAutoMapper(typeof(MapperConfiguration));
 
 var app = builder.Build();
 

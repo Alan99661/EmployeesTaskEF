@@ -1,4 +1,5 @@
 ﻿using EmployeeTask.Models.Abstactions;
+using EmployeeTask.Models.Entities.JoinModels;
 using EmployeeTask.Models.Entities.MeetingModels;
 using EmployeeTask.Models.Entities.TaskModels;
 using System;
@@ -16,6 +17,6 @@ namespace EmployeeTask.Models.Entities.EmpyoyeeModels
         public decimal Salary { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public ICollection<TaskEnt>? CompletedTasks { get; set; }
+        public ICollection<TaskEnt>? AssingnedTasks { get; set; }
     }
 }

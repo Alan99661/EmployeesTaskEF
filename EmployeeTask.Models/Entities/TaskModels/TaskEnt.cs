@@ -13,7 +13,8 @@ namespace EmployeeTask.Models.Entities.TaskModels
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime DueDate { get; set; }
-        public ICollection<Employee> Assingnees { get; set; }
+        public ICollection<Employee> Assignees { get; set; }
         public bool IsCompleted { get; set; }
+        public DateTime? CompletedAt { get; set; }
     }
 }

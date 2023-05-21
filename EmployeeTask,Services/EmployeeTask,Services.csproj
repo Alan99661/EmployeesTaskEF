@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Constracts\" />
+    <ProjectReference Include="..\EmployeeTask.Models\EmployeeTask.Models.csproj" />
   </ItemGroup>
 
 </Project>
