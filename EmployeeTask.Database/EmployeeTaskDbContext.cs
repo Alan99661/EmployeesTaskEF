@@ -4,6 +4,7 @@ using EmployeeTask.Models.Entities.EmpyoyeeModels;
 using EmployeeTask.Models.Entities.MeetingModels;
 using EmployeeTask.Models.Entities.TaskModels;
 using EmployeeTask.Models.Entities.JoinModels;
+using Azure;
 
 namespace EmployeeTask.Database
 {
@@ -23,8 +24,8 @@ namespace EmployeeTask.Database
             {
                 e.HasKey(p => p.Id);
                 e.Property(p => p.FullName).IsRequired();
-                e.Property(p => p.AssingnedTasks).IsRequired(false);
-                e.HasMany(t => t.AssingnedTasks).WithMany(a => a.Assignees).UsingEntity<EmployeeTaskJoinModel>();
+                // e.Property(p => p.AssingnedTasks).IsRequired(false);
+                e.HasMany(t => t.AssingnedTasks).WithMany(a => a.Assignees);//.UsingEntity<EmployeeTaskJoinModel>();
 
             });
 
@@ -32,13 +33,15 @@ namespace EmployeeTask.Database
             {
                 t.HasKey(p => p.Id);
                 t.Property(p => p.Title).IsRequired();
-                t.Property(p => p.Assignees).IsRequired();
+                t.HasMany(t => t.Assignees).WithMany(a => a.AssingnedTasks);//.UsingEntity<EmployeeTaskJoinModel>();
+                //t.Property(p => p.Assignees).IsRequired();
             });
             modelBuilder.Entity<Meeting>(m =>
             {
                 m.HasKey(p => p.Id);
                 m.Property(p => p.Subject).IsRequired();
-                m.Property(p => p.Attendees).IsRequired();
+                // m.Property(p => p.Attendees).IsRequired();
+                m.HasMany(p => p.Attendees);
             });
 
             //modelBuilder.Entity<Meeting>()

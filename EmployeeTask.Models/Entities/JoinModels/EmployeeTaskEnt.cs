@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace EmployeeTask.Models.Entities.JoinModels
 {
-    public class EmployeeTaskJoinModel : BaseModel
+    public class EmployeeTaskEnt : BaseModel
     {
-        public Task Task { get; set; }
-        public Employee Employee { get; set; }
         public string TaskId { get; set; }
         public string EmployeeId { get; set; }
+        // public TaskEnt Task {get; set; }
+        //public Empoyee Employee {get; set; }
     }
 }
