@@ -9,6 +9,6 @@ namespace EmployeeTask.Models.Abstactions
         {
             Id = Guid.NewGuid().ToString();
         }
-        public string Id { get;internal set; }
+        public string Id { get; set; }
     }
 }

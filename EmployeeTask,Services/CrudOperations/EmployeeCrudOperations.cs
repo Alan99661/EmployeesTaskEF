@@ -1,29 +1,86 @@
-﻿using EmployeeTask.Models.Entities.EmpyoyeeModels;
+﻿using AutoMapper;
+using EmployeeTask.Database;
+using EmployeeTask.Models.Entities.EmpyoyeeModels;
 using EmployeeTask_Services.Constracts;
 
 namespace EmployeeTask_Services.Cruds
 {
     public class EmployeeCrudOperations : IEmployeeCrudOperations
     {
+        private readonly EmployeeTaskDbContext _context;
+        private readonly IMapper _mapper;
+
+        public EmployeeCrudOperations(EmployeeTaskDbContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
+
         public ICollection<EmployeeViewModel> GetAllEmployees()
         {
-            return new List<EmployeeViewModel>();
+            var employees = _context.Employees.Select(s => s).ToList();
+            var result = _mapper.Map<List<EmployeeViewModel>>(employees);
+            return result;
         }
         public EmployeeViewModel GetById(string id)
         {
-            return new EmployeeViewModel();
+            var employee = _context.Employees.FirstOrDefault(e => e.Id == id);
+            var result = _mapper.Map<EmployeeViewModel>(employee);
+            return result;
         }
-        public string CreateEmployee(EmployeeAddModel addModel)
+        public EmployeeViewModel CreateEmployee(EmployeeAddModel addModel)
         {
-            return "Ye";
+            try
+            {
+                var employeeEnt = _mapper.Map<Employee>(addModel);
+                _context.Employees.Add(employeeEnt);
+                var result = _mapper.Map<EmployeeViewModel>(employeeEnt);
+                _context.SaveChanges();
+                return result;
+            }
+            catch (Exception ex) 
+            {
+                throw new Exception("Failure");
+            }
         }
-        public string UpdateEmployee(EmployeeUpdateModel updateModel)
+        public EmployeeViewModel UpdateEmployee(string id, EmployeeUpdateModel updateModel)
         {
-            return "Ye";
+            try
+            {
+                var employeeEnt = _context.Employees.FirstOrDefault(e =>e.Id == id);
+               // var updateEnt = _mapper.Map<Employee>(updateModel);
+                employeeEnt.FullName = updateModel.FullName;
+                employeeEnt.Salary = updateModel.Salary;
+                employeeEnt.PhoneNumber = updateModel.PhoneNumber;
+                employeeEnt.Birthday = updateModel.Birthday;
+                employeeEnt.Email = updateModel.Email;
+                employeeEnt.AttendedMeetings = updateModel.AttendedMeetings;
+                employeeEnt.AssingnedTasks = updateModel.AssingnedTasks;
+                var res = _context.Employees.Update(employeeEnt);
+                _context.SaveChanges();
+                var result = _mapper.Map<EmployeeViewModel>(employeeEnt);
+               
+                return result;
+          
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Failure");
+            }
         }
         public string DeleteEmployee(string id)
         {
-            return "Ye";
+            try
+            {
+                var employee = _context.Employees.FirstOrDefault(e => e.Id == id);
+                _context.Employees.Remove(employee);
+                _context.SaveChanges();
+                return "Succsess";
+            }
+            catch (Exception ex)
+            {
+                return "Failure";
+            }
         }
     }
 }

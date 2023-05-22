@@ -1,4 +1,5 @@
-﻿using EmployeeTask.Models.Entities.TaskModels;
+﻿using EmployeeTask.Models.Entities.MeetingModels;
+using EmployeeTask.Models.Entities.TaskModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace EmployeeTask.Models.Entities.EmpyoyeeModels
         public decimal Salary { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public List<TaskEnt> AssingnedTasks { get; set; }
+        public List<TaskEnt>? AssingnedTasks { get; set; }
+        public ICollection<Meeting>? AttendedMeetings { get; set; }
     }
 }

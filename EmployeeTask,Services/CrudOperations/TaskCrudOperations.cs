@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeTask_Services.Cruds
 {
-    internal class TaskCrudOperations : ITaskCrudOperations
+    public class TaskCrudOperations : ITaskCrudOperations
     {
         public ICollection<TaskViewModel> GetAllTasks()
         {

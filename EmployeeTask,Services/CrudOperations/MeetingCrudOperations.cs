@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeTask_Services.Cruds
 {
-    internal class MeetingCrudOperations : IMeetingCrudOperations
+    public class MeetingCrudOperations : IMeetingCrudOperations
     {
         public ICollection<MeetingViewModel> GetAllMeetings()
         {

@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeTask,Services", "Em
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeTask.Database", "EmployeeTask.Database\EmployeeTask.Database.csproj", "{74125481-FFFC-4D22-A9BC-E4E3ACC72B74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeTask", "EmployeeTask\EmployeeTask.csproj", "{F8CE6810-A61F-4421-97D8-1D98722705D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeTask", "EmployeeTask\EmployeeTask.csproj", "{F8CE6810-A61F-4421-97D8-1D98722705D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeTask.Tests", "EmployeeTask.Tests\EmployeeTask.Tests.csproj", "{2FD39738-D025-49FE-B82C-91DDAF3A107E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F8CE6810-A61F-4421-97D8-1D98722705D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8CE6810-A61F-4421-97D8-1D98722705D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8CE6810-A61F-4421-97D8-1D98722705D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FD39738-D025-49FE-B82C-91DDAF3A107E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FD39738-D025-49FE-B82C-91DDAF3A107E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FD39738-D025-49FE-B82C-91DDAF3A107E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FD39738-D025-49FE-B82C-91DDAF3A107E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
