@@ -19,5 +19,6 @@ namespace EmployeeTask.Models.Entities.EmpyoyeeModels
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public ICollection<TaskEnt>? AssingnedTasks { get; set; }
+        public ICollection<Meeting>? AttendedMeetings { get; set; }
     }
 }

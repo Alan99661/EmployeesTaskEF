@@ -33,7 +33,7 @@ namespace EmployeeTask.Database
             {
                 t.HasKey(p => p.Id);
                 t.Property(p => p.Title).IsRequired();
-                t.HasMany(t => t.Assignees).WithMany(a => a.AssingnedTasks);//.UsingEntity<EmployeeTaskJoinModel>();
+                t.HasMany(t => t.Assignees).WithMany(a => a.AssingnedTasks).UsingEntity<EmployeeTaskEnt>();
                 //t.Property(p => p.Assignees).IsRequired();
             });
             modelBuilder.Entity<Meeting>(m =>
@@ -41,7 +41,7 @@ namespace EmployeeTask.Database
                 m.HasKey(p => p.Id);
                 m.Property(p => p.Subject).IsRequired();
                 // m.Property(p => p.Attendees).IsRequired();
-                m.HasMany(p => p.Attendees);
+                m.HasMany(p => p.Attendees).WithMany(a => a.AttendedMeetings).UsingEntity<EmployeeMeeting>();
             });
 
             //modelBuilder.Entity<Meeting>()
@@ -57,7 +57,6 @@ namespace EmployeeTask.Database
             //        Birthday = DateTime.Today,
             //        PhoneNumber = "0881238979",
             //        Salary = 500.99m,
-            //        CompletedTasks = new List<TaskEnt>() {}
             //    },
             //    new Employee()
             //    {
@@ -66,7 +65,7 @@ namespace EmployeeTask.Database
             //        Birthday = DateTime.Today,
             //        PhoneNumber = "0884567890",
             //        Salary = 700.50m,
-            //        CompletedTasks = new List<TaskEnt>() {}
+            //        AssingnedTasks = new List<TaskEnt>() {}
             //    },
             //    new Employee()
             //    {
@@ -74,8 +73,7 @@ namespace EmployeeTask.Database
             //        Email = "joseph@yahoo.com",
             //        Birthday = DateTime.Today,
             //        PhoneNumber = "0886781234",
-            //        Salary = 600.75m,
-            //        CompletedTasks = new List<TaskEnt>() {}
+            //        Salary = 600.75m
             //    },
             //    new Employee()
             //    {
@@ -83,8 +81,7 @@ namespace EmployeeTask.Database
             //        Email = "giorno@hotmail.com",
             //        Birthday = DateTime.Today,
             //        PhoneNumber = "0884321567",
-            //        Salary = 800.25m,
-            //        CompletedTasks = new List<TaskEnt>() {}
+            //        Salary = 800.25m
             //    },
             //    new Employee()
             //    {
@@ -92,8 +89,7 @@ namespace EmployeeTask.Database
             //        Email = "josuke@gmail.com",
             //        Birthday = DateTime.Today,
             //        PhoneNumber = "0887893456",
-            //        Salary = 550.80m,
-            //        CompletedTasks = new List<TaskEnt>() {}
+            //        Salary = 550.80m
             //    }
             //};
             //var tasks = new List<TaskEnt>()
@@ -102,21 +98,21 @@ namespace EmployeeTask.Database
             //    {
             //        Title = "FirstTask",
             //        Description = "Complete a Task",
-            //        Assingnees = new List<Employee>() {employees[1]},
+            //        Assignees = new List<Employee>() {employees[1]},
             //        DueDate = new DateTime(2024,12,03)
             //    },
             //    new TaskEnt()
             //    {
             //       Title = "SecondTask",
             //       Description = "Review project documentation",
-            //       Assingnees = new List<Employee>() { employees[2], employees[3] },
+            //       Assignees = new List<Employee>() { employees[2], employees[3] },
             //       DueDate = new DateTime(2024, 10, 15)
             //    },
             //    new TaskEnt()
             //    {
             //        Title = "ThirdTask",
             //        Description = "Implement new feature",
-            //        Assingnees = new List<Employee>() { employees[4] },
+            //        Assignees = new List<Employee>() { employees[4] },
             //        DueDate = new DateTime(2024, 11, 30)
             //    }
             //};
@@ -130,7 +126,7 @@ namespace EmployeeTask.Database
             //        Subject = "Ted Talk"
             //    },
             //    new Meeting()
-            //    {s
+            //    {
             //       Attendees = new List<Employee> { employees[1], employees[3], employees[4] },
             //       StartTime = new DateTime(2023, 6, 15, 9, 30, 00),
             //       EndTime = new DateTime(2023, 6, 15, 10, 30, 00),
