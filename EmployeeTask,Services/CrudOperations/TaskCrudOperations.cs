@@ -1,4 +1,6 @@
-﻿using EmployeeTask.Models.Entities.TaskModels;
+﻿using AutoMapper;
+using EmployeeTask.Database;
+using EmployeeTask.Models.Entities.TaskModels;
 using EmployeeTask_Services.Constracts;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,9 @@ namespace EmployeeTask_Services.Cruds
 {
     public class TaskCrudOperations : ITaskCrudOperations
     {
+        private readonly EmployeeTaskDbContext _context;
+        private readonly IMapper _mapper;
+
         public ICollection<TaskViewModel> GetAllTasks()
         {
             return new List<TaskViewModel>();

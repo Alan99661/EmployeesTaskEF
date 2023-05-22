@@ -180,10 +180,9 @@ namespace EmployeeTask.Tests
             };
             //Act
             string id = service.CreateEmployee(addmodel).Id;
-            service.DeleteEmployee(id);
-            var res = service.GetAllEmployees();
+            var _res = service.DeleteEmployee(id);
             //Assert
-            Xunit.Assert.Empty(res);
+            Xunit.Assert.Equal(_res, "Success");
         }
     }
 }

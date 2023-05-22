@@ -26,8 +26,4 @@
     <ProjectReference Include="..\EmployeeTask.Models\EmployeeTask.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Configuring\Seed\" />
-  </ItemGroup>
-
 </Project>
