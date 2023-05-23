@@ -72,32 +72,6 @@ namespace EmployeeTask.Database.Migrations
                     b.ToTable("EmployeeMeeting");
                 });
 
-            modelBuilder.Entity("EmployeeTask.Models.Entities.JoinModels.EmployeeTaskEnt", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("AssingnedTasksId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("EmployeeId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("TaskId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssingnedTasksId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("EmployeeTaskEnt");
-                });
-
             modelBuilder.Entity("EmployeeTask.Models.Entities.MeetingModels.Meeting", b =>
                 {
                     b.Property<string>("Id")
@@ -123,9 +97,6 @@ namespace EmployeeTask.Database.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("CompletedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -134,7 +105,9 @@ namespace EmployeeTask.Database.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -143,6 +116,21 @@ namespace EmployeeTask.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tasks");
+                });
+
+            modelBuilder.Entity("EmployeeTaskEnt", b =>
+                {
+                    b.Property<string>("AssigneesId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AssingnedTasksId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("AssigneesId", "AssingnedTasksId");
+
+                    b.HasIndex("AssingnedTasksId");
+
+                    b.ToTable("EmployeeTaskEnt");
                 });
 
             modelBuilder.Entity("EmployeeTask.Models.Entities.JoinModels.EmployeeMeeting", b =>
@@ -160,17 +148,17 @@ namespace EmployeeTask.Database.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EmployeeTask.Models.Entities.JoinModels.EmployeeTaskEnt", b =>
+            modelBuilder.Entity("EmployeeTaskEnt", b =>
                 {
-                    b.HasOne("EmployeeTask.Models.Entities.TaskModels.TaskEnt", null)
+                    b.HasOne("EmployeeTask.Models.Entities.EmpyoyeeModels.Employee", null)
                         .WithMany()
-                        .HasForeignKey("AssingnedTasksId")
+                        .HasForeignKey("AssigneesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EmployeeTask.Models.Entities.EmpyoyeeModels.Employee", null)
+                    b.HasOne("EmployeeTask.Models.Entities.TaskModels.TaskEnt", null)
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
+                        .HasForeignKey("AssingnedTasksId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
