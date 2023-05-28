@@ -10,7 +10,7 @@ namespace EmployeeTask.Models.Entities.EmpyoyeeModels
 {
     public class EmployeeUpdateModel
     {
-        //public string Id { get; set; }
+        public string Id { get; set; }
         public string FullName { get; set; }
         public DateTime Birthday { get; set; }
         public decimal Salary { get; set; }

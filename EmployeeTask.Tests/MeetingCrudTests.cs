@@ -23,7 +23,8 @@ namespace EmployeeTask.Tests
         {
             //Arrange
             var options = new DbContextOptionsBuilder<EmployeeTaskDbContext>()
-           .UseSqlServer("Server=DESKTOP-BKKI1V8\\SQLEXPRESS;Database=EmployeeTaskDB;Trusted_Connection=True;TrustServerCertificate=True;").Options;
+           .UseInMemoryDatabase(databaseName: "EmployeeTaskDb")
+           .Options;
             EmployeeTaskDbContext dbContext = new EmployeeTaskDbContext(options);
   
             IConfigurationProvider configuration = new MapperConfiguration(x =>

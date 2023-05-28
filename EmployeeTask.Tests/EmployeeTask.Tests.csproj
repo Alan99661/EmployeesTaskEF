@@ -29,7 +29,6 @@
     <ProjectReference Include="..\EmployeeTask,Services\EmployeeTask,Services.csproj" />
     <ProjectReference Include="..\EmployeeTask.Database\EmployeeTask.Database.csproj" />
     <ProjectReference Include="..\EmployeeTask.Models\EmployeeTask.Models.csproj" />
-    <ProjectReference Include="..\EmployeeTask\EmployeeTask.csproj" />
   </ItemGroup>
 
 </Project>

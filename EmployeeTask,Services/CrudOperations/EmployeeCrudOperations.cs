@@ -55,12 +55,12 @@ namespace EmployeeTask_Services.Cruds
             }
         }
 
-        public EmployeeViewModel UpdateEmployee(string id, EmployeeUpdateModel updateModel)
+        public EmployeeViewModel UpdateEmployee(EmployeeUpdateModel updateModel)
         {
             try
             {
 
-                var employeeEnt = _context.Employees.FirstOrDefault(e =>e.Id == id);
+                var employeeEnt = _context.Employees.FirstOrDefault(e =>e.Id == updateModel.Id);
 
                 employeeEnt.FullName = updateModel.FullName;
                 employeeEnt.Salary = updateModel.Salary;
@@ -82,12 +82,12 @@ namespace EmployeeTask_Services.Cruds
                 throw new Exception("Failure");
             }
         }
-        public string DeleteEmployee(string id)
+        public string DeleteEmployee(EmployeeDeleteModel deleteModel)
         {
             try
             {
 
-                var employee = _context.Employees.FirstOrDefault(e => e.Id == id);
+                var employee = _context.Employees.FirstOrDefault(e => e.Id == deleteModel.Id);
                 _context.Employees.Remove(employee);
                 _context.SaveChanges();
 

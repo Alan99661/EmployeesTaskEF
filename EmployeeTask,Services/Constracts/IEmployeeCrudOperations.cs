@@ -5,9 +5,9 @@ namespace EmployeeTask_Services.Constracts
     public interface IEmployeeCrudOperations
     {
         EmployeeViewModel CreateEmployee(EmployeeAddModel addModel);
-        string DeleteEmployee(string id);
+        string DeleteEmployee(EmployeeDeleteModel deleteModel);
         ICollection<EmployeeViewModel> GetAllEmployees();
         EmployeeViewModel GetById(string id);
-        EmployeeViewModel UpdateEmployee(string id,EmployeeUpdateModel updateModel);
+        EmployeeViewModel UpdateEmployee(EmployeeUpdateModel updateModel);
     }
 }

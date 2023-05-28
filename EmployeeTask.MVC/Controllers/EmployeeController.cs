@@ -37,7 +37,21 @@ namespace EmployeeTask.MVC.Controllers
 
         public IActionResult UpdateEmployee()
         {
-            return View()
+            return View();
+        }
+        public IActionResult UpdateEmployeePost(EmployeeUpdateModel updateModel)
+        {
+            var res = operations.UpdateEmployee(updateModel);
+            return Redirect("/Employee/GetById/" + res.Id);
+        }
+        public IActionResult DeleteEmployee() 
+        {
+            return View();
+        }
+        public IActionResult DeleteEmployeePost(EmployeeDeleteModel deleteModel)
+        {
+            operations.DeleteEmployee(deleteModel);
+            return RedirectToAction("Index");
         }
     }
 }
