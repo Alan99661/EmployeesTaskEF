@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeTask.Database.Migrations
 {
     [DbContext(typeof(EmployeeTaskDbContext))]
-    [Migration("20230523063335_InitialMigration")]
+    [Migration("20230525122307_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -24,6 +24,21 @@ namespace EmployeeTask.Database.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("EmployeeMeeting", b =>
+                {
+                    b.Property<string>("EmployeesId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("MeetingsId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("EmployeesId", "MeetingsId");
+
+                    b.HasIndex("MeetingsId");
+
+                    b.ToTable("EmployeeMeeting");
+                });
 
             modelBuilder.Entity("EmployeeTask.Models.Entities.EmpyoyeeModels.Employee", b =>
                 {
@@ -51,28 +66,6 @@ namespace EmployeeTask.Database.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("EmployeeTask.Models.Entities.JoinModels.EmployeeMeeting", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("EmployeeId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("MeetingId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.HasIndex("MeetingId");
-
-                    b.ToTable("EmployeeMeeting");
                 });
 
             modelBuilder.Entity("EmployeeTask.Models.Entities.MeetingModels.Meeting", b =>
@@ -123,30 +116,30 @@ namespace EmployeeTask.Database.Migrations
 
             modelBuilder.Entity("EmployeeTaskEnt", b =>
                 {
-                    b.Property<string>("AssigneesId")
+                    b.Property<string>("EmployeesId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AssingnedTasksId")
+                    b.Property<string>("TaskEntsId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("AssigneesId", "AssingnedTasksId");
+                    b.HasKey("EmployeesId", "TaskEntsId");
 
-                    b.HasIndex("AssingnedTasksId");
+                    b.HasIndex("TaskEntsId");
 
                     b.ToTable("EmployeeTaskEnt");
                 });
 
-            modelBuilder.Entity("EmployeeTask.Models.Entities.JoinModels.EmployeeMeeting", b =>
+            modelBuilder.Entity("EmployeeMeeting", b =>
                 {
                     b.HasOne("EmployeeTask.Models.Entities.EmpyoyeeModels.Employee", null)
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
+                        .HasForeignKey("EmployeesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EmployeeTask.Models.Entities.MeetingModels.Meeting", null)
                         .WithMany()
-                        .HasForeignKey("MeetingId")
+                        .HasForeignKey("MeetingsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -155,13 +148,13 @@ namespace EmployeeTask.Database.Migrations
                 {
                     b.HasOne("EmployeeTask.Models.Entities.EmpyoyeeModels.Employee", null)
                         .WithMany()
-                        .HasForeignKey("AssigneesId")
+                        .HasForeignKey("EmployeesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EmployeeTask.Models.Entities.TaskModels.TaskEnt", null)
                         .WithMany()
-                        .HasForeignKey("AssingnedTasksId")
+                        .HasForeignKey("TaskEntsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

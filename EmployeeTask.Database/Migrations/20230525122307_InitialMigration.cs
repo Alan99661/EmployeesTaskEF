@@ -60,22 +60,21 @@ namespace EmployeeTask.Database.Migrations
                 name: "EmployeeMeeting",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    MeetingId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    EmployeesId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MeetingsId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeMeeting", x => x.Id);
+                    table.PrimaryKey("PK_EmployeeMeeting", x => new { x.EmployeesId, x.MeetingsId });
                     table.ForeignKey(
-                        name: "FK_EmployeeMeeting_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
+                        name: "FK_EmployeeMeeting_Employees_EmployeesId",
+                        column: x => x.EmployeesId,
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EmployeeMeeting_Meeting_MeetingId",
-                        column: x => x.MeetingId,
+                        name: "FK_EmployeeMeeting_Meeting_MeetingsId",
+                        column: x => x.MeetingsId,
                         principalTable: "Meeting",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -85,40 +84,35 @@ namespace EmployeeTask.Database.Migrations
                 name: "EmployeeTaskEnt",
                 columns: table => new
                 {
-                    AssigneesId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AssingnedTasksId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    EmployeesId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TaskEntsId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeTaskEnt", x => new { x.AssigneesId, x.AssingnedTasksId });
+                    table.PrimaryKey("PK_EmployeeTaskEnt", x => new { x.EmployeesId, x.TaskEntsId });
                     table.ForeignKey(
-                        name: "FK_EmployeeTaskEnt_Employees_AssigneesId",
-                        column: x => x.AssigneesId,
+                        name: "FK_EmployeeTaskEnt_Employees_EmployeesId",
+                        column: x => x.EmployeesId,
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EmployeeTaskEnt_Tasks_AssingnedTasksId",
-                        column: x => x.AssingnedTasksId,
+                        name: "FK_EmployeeTaskEnt_Tasks_TaskEntsId",
+                        column: x => x.TaskEntsId,
                         principalTable: "Tasks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_EmployeeMeeting_EmployeeId",
+                name: "IX_EmployeeMeeting_MeetingsId",
                 table: "EmployeeMeeting",
-                column: "EmployeeId");
+                column: "MeetingsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EmployeeMeeting_MeetingId",
-                table: "EmployeeMeeting",
-                column: "MeetingId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EmployeeTaskEnt_AssingnedTasksId",
+                name: "IX_EmployeeTaskEnt_TaskEntsId",
                 table: "EmployeeTaskEnt",
-                column: "AssingnedTasksId");
+                column: "TaskEntsId");
         }
 
         /// <inheritdoc />

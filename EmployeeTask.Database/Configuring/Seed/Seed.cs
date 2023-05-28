@@ -4,16 +4,19 @@ using EmployeeTask.Models.Entities.TaskModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace EmployeeTask.Database.Configuring.Seed
 {
-    internal class Seed
+    public static class Seed
     {
-        public void SeedData()
+        public static void SeedData(this ModelBuilder modelBuilder)
         {
+            Debugger.Launch();
             var employees = new List<Employee>
             {
                 new Employee()
@@ -31,7 +34,7 @@ namespace EmployeeTask.Database.Configuring.Seed
                     Birthday = DateTime.Today,
                     PhoneNumber = "0884567890",
                     Salary = 700.50m,
-                    AssingnedTasks = new List<TaskEnt>() {}
+                    AssignedTasks = new List<TaskEnt>() {}
                 },
                 new Employee()
                 {
@@ -93,7 +96,7 @@ namespace EmployeeTask.Database.Configuring.Seed
                 },
                 new Meeting()
                 {
-                   Attendees = new List<Employee> { employees[1], employees[3], employees[4] },
+                   Attendees = new List<Employee> { employees[1], employees[3], employees[2] },
                    StartTime = new DateTime(2023, 6, 15, 9, 30, 00),
                    EndTime = new DateTime(2023, 6, 15, 10, 30, 00),
                    Subject = "Project Planning"
@@ -101,12 +104,16 @@ namespace EmployeeTask.Database.Configuring.Seed
                 },
                 new Meeting()
                 {
-                    Attendees = new List<Employee> { employees[0], employees[2], employees[3], employees[4] },
+                    Attendees = new List<Employee> { employees[0], employees[2], employees[3], employees[1] },
                     StartTime = new DateTime(2023, 7, 5, 14, 00, 00),
                     EndTime = new DateTime(2023, 7, 5, 15, 30, 00),
                     Subject = "Team Update"
                 }
             };
+            modelBuilder.Entity<Employee>().HasData(employees);
+            modelBuilder.Entity<TaskEnt>().HasData(tasks);
+            modelBuilder.Entity<Meeting>().HasData(meetings);
+           
         }
     }
 }

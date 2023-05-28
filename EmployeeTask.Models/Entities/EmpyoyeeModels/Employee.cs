@@ -18,7 +18,7 @@ namespace EmployeeTask.Models.Entities.EmpyoyeeModels
         public decimal Salary { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public ICollection<TaskEnt>? AssingnedTasks { get; set; }
-        public ICollection<Meeting>? AttendedMeetings { get; set; }
+        public ICollection<TaskEnt>? AssignedTasks { get; set; }
+        public ICollection<Meeting>? Meetings { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using EmployeeTask.Database;
 using EmployeeTask.Models.Entities.EmpyoyeeModels;
 using EmployeeTask_Services.Constracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeTask_Services.Cruds
 {
@@ -19,7 +20,7 @@ namespace EmployeeTask_Services.Cruds
         public ICollection<EmployeeViewModel> GetAllEmployees()
         {
 
-            var employees = _context.Employees.Select(s => s).ToList();
+            var employees = _context.Employees.Select(s => s).Include(e=>e.Meetings).ToList();
             var result = _mapper.Map<List<EmployeeViewModel>>(employees);
 
             return result;
@@ -40,6 +41,8 @@ namespace EmployeeTask_Services.Cruds
             {
 
                 var employeeEnt = _mapper.Map<Employee>(addModel);
+                
+               // _context.Meeting.FirstOrDefault(x => x.)
                 _context.Employees.Add(employeeEnt);
                 var result = _mapper.Map<EmployeeViewModel>(employeeEnt);
                 _context.SaveChanges();
@@ -64,8 +67,8 @@ namespace EmployeeTask_Services.Cruds
                 employeeEnt.PhoneNumber = updateModel.PhoneNumber;
                 employeeEnt.Birthday = updateModel.Birthday;
                 employeeEnt.Email = updateModel.Email;
-                employeeEnt.AttendedMeetings = updateModel.AttendedMeetings;
-                employeeEnt.AssingnedTasks = updateModel.AssingnedTasks;
+                employeeEnt.Meetings = updateModel.Meetings;
+                employeeEnt.AssignedTasks = updateModel.AssignedTasks;
 
                 var res = _context.Employees.Update(employeeEnt);
                 _context.SaveChanges();

@@ -5,7 +5,6 @@ using EmployeeTask.Models.Entities.MeetingModels;
 using EmployeeTask.Models.Entities.TaskModels;
 using EmployeeTask_Services.Constracts;
 using EmployeeTask_Services.Cruds;
-using EmployeeTask_Services.InfrastructureClasses;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,10 +23,9 @@ namespace EmployeeTask.Tests
         {
             //Arrange
             var options = new DbContextOptionsBuilder<EmployeeTaskDbContext>()
-           .UseInMemoryDatabase(databaseName: "EmployeeTaskDb")
-           .Options;
+           .UseSqlServer("Server=DESKTOP-BKKI1V8\\SQLEXPRESS;Database=EmployeeTaskDB;Trusted_Connection=True;TrustServerCertificate=True;").Options;
             EmployeeTaskDbContext dbContext = new EmployeeTaskDbContext(options);
-            ILoggerService logger = new LoggerService();
+  
             IConfigurationProvider configuration = new MapperConfiguration(x =>
             {
                 x.CreateMap<Meeting, MeetingViewModel>().ReverseMap();
@@ -43,8 +41,8 @@ namespace EmployeeTask.Tests
             {
                 new Employee()
                 {
-                    FullName = "Dio Brando",
-                    Email = "dio@hotmail.com",
+                    FullName = "Speedwagon",
+                    Email = "speedwagon@hotmail.com",
                     Birthday = DateTime.Today,
                     PhoneNumber = "0881238979",
                     Salary = 500.99m,
@@ -56,7 +54,7 @@ namespace EmployeeTask.Tests
                     Birthday = DateTime.Today,
                     PhoneNumber = "0884567890",
                     Salary = 700.50m,
-                    AssingnedTasks = new List<TaskEnt>() {}
+                    AssignedTasks = new List<TaskEnt>() {}
                 }
             };
 
@@ -83,7 +81,6 @@ namespace EmployeeTask.Tests
            .UseInMemoryDatabase(databaseName: "EmployeeTaskDb")
            .Options;
             EmployeeTaskDbContext dbContext = new EmployeeTaskDbContext(options);
-            ILoggerService logger = new LoggerService();
             IConfigurationProvider configuration = new MapperConfiguration(x =>
             {
                 x.CreateMap<Meeting, MeetingViewModel>().ReverseMap();
@@ -112,7 +109,7 @@ namespace EmployeeTask.Tests
                     Birthday = DateTime.Today,
                     PhoneNumber = "0884567890",
                     Salary = 700.50m,
-                    AssingnedTasks = new List<TaskEnt>() {}
+                    AssignedTasks = new List<TaskEnt>() {}
                 }
             };
 
@@ -138,7 +135,6 @@ namespace EmployeeTask.Tests
            .UseInMemoryDatabase(databaseName: "EmployeeTaskDb")
            .Options;
             EmployeeTaskDbContext dbContext = new EmployeeTaskDbContext(options);
-            ILoggerService logger = new LoggerService();
             IConfigurationProvider configuration = new MapperConfiguration(x =>
             {
                 x.CreateMap<Meeting, MeetingViewModel>().ReverseMap();
@@ -167,7 +163,7 @@ namespace EmployeeTask.Tests
                     Birthday = DateTime.Today,
                     PhoneNumber = "0884567890",
                     Salary = 700.50m,
-                    AssingnedTasks = new List<TaskEnt>() {}
+                    AssignedTasks = new List<TaskEnt>() {}
                 }
             };
 
@@ -184,7 +180,7 @@ namespace EmployeeTask.Tests
             //Assert 
             Xunit.Assert.Equal(res.Subject, addmodel.Subject);
             Xunit.Assert.Equal(res.Attendees, addmodel.Attendees);
-            Xunit.Assert.Equal(res.Subject, addmodel.Attendees.FirstOrDefault().AttendedMeetings.FirstOrDefault().Subject);
+            Xunit.Assert.Equal(res.Subject, addmodel.Attendees.FirstOrDefault().Meetings.FirstOrDefault().Subject);
         }
 
         [Fact]
@@ -195,7 +191,6 @@ namespace EmployeeTask.Tests
            .UseInMemoryDatabase(databaseName: "EmployeeTaskDb")
            .Options;
             EmployeeTaskDbContext dbContext = new EmployeeTaskDbContext(options);
-            ILoggerService logger = new LoggerService();
             IConfigurationProvider configuration = new MapperConfiguration(x =>
             {
                 x.CreateMap<Meeting, MeetingViewModel>().ReverseMap();
@@ -225,7 +220,7 @@ namespace EmployeeTask.Tests
                     Birthday = DateTime.Today,
                     PhoneNumber = "0884567890",
                     Salary = 700.50m,
-                    AssingnedTasks = new List<TaskEnt>() {}
+                    AssignedTasks = new List<TaskEnt>() {}
                 }
             };
 
@@ -261,7 +256,6 @@ namespace EmployeeTask.Tests
            .UseInMemoryDatabase(databaseName: "EmployeeTaskDb")
            .Options;
             EmployeeTaskDbContext dbContext = new EmployeeTaskDbContext(options);
-            ILoggerService logger = new LoggerService();
             IConfigurationProvider configuration = new MapperConfiguration(x =>
             {
                 x.CreateMap<Meeting, MeetingViewModel>().ReverseMap();
@@ -290,7 +284,7 @@ namespace EmployeeTask.Tests
                     Birthday = DateTime.Today,
                     PhoneNumber = "0884567890",
                     Salary = 700.50m,
-                    AssingnedTasks = new List<TaskEnt>() {}
+                    AssignedTasks = new List<TaskEnt>() {}
                 }
             };
 

@@ -3,7 +3,6 @@ using EmployeeTask.Database;
 using EmployeeTask.Models.Entities.EmpyoyeeModels;
 using EmployeeTask_Services.Constracts;
 using EmployeeTask_Services.Cruds;
-using EmployeeTask_Services.InfrastructureClasses;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
@@ -20,10 +19,8 @@ namespace EmployeeTask.Tests
         {
             //Arrange
             var options = new DbContextOptionsBuilder<EmployeeTaskDbContext>()
-           .UseInMemoryDatabase(databaseName: "EmployeeTaskDb")
-           .Options;
+           .UseSqlServer("Server=DESKTOP-BKKI1V8\\SQLEXPRESS;Database=EmployeeTaskDB;Trusted_Connection=True;TrustServerCertificate=True;").Options;
             EmployeeTaskDbContext dbContext = new EmployeeTaskDbContext(options);
-            ILoggerService logger = new LoggerService();
             IConfigurationProvider configuration = new MapperConfiguration(x =>
             {
                 x.CreateMap<Employee,EmployeeViewModel>().ReverseMap();
@@ -55,7 +52,6 @@ namespace EmployeeTask.Tests
                       .UseInMemoryDatabase(databaseName: "EmployeeTaskDb")
                       .Options;
             EmployeeTaskDbContext dbContext = new EmployeeTaskDbContext(options);
-            ILoggerService logger = new LoggerService();
             IConfigurationProvider configuration = new MapperConfiguration(x =>
             {
                 x.CreateMap<Employee, EmployeeViewModel>().ReverseMap();
@@ -87,7 +83,6 @@ namespace EmployeeTask.Tests
            .UseInMemoryDatabase(databaseName: "EmployeeTaskDb")
            .Options;
             EmployeeTaskDbContext dbContext = new EmployeeTaskDbContext(options);
-            ILoggerService logger = new LoggerService();
             IConfigurationProvider configuration = new MapperConfiguration(x =>
             {
                 x.CreateMap<Employee, EmployeeViewModel>().ReverseMap();
@@ -119,7 +114,7 @@ namespace EmployeeTask.Tests
            .UseInMemoryDatabase(databaseName: "EmployeeTaskDb")
            .Options;
             EmployeeTaskDbContext dbContext = new EmployeeTaskDbContext(options);
-            ILoggerService logger = new LoggerService();
+            
             IConfigurationProvider configuration = new MapperConfiguration(x =>
             {
                 x.CreateMap<Employee, EmployeeViewModel>().ReverseMap();
@@ -159,7 +154,6 @@ namespace EmployeeTask.Tests
           .UseInMemoryDatabase(databaseName: "EmployeeTaskDb")
           .Options;
             EmployeeTaskDbContext dbContext = new EmployeeTaskDbContext(options);
-            ILoggerService logger = new LoggerService();
             IConfigurationProvider configuration = new MapperConfiguration(x =>
             {
                 x.CreateMap<Employee, EmployeeViewModel>().ReverseMap();

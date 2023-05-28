@@ -5,6 +5,7 @@ using EmployeeTask.Models.Entities.MeetingModels;
 using EmployeeTask.Models.Entities.TaskModels;
 using EmployeeTask.Models.Entities.JoinModels;
 using Azure;
+using EmployeeTask.Database.Configuring.Seed;
 
 namespace EmployeeTask.Database
 {
@@ -24,8 +25,18 @@ namespace EmployeeTask.Database
             {
                 e.HasKey(p => p.Id);
                 e.Property(p => p.FullName).IsRequired();
-                // e.Property(p => p.AssingnedTasks).IsRequired(false);
-                e.HasMany(t => t.AssingnedTasks).WithMany(a => a.Assignees);//.UsingEntity<EmployeeTaskEnt>();
+                e.HasMany(t => t.AssignedTasks).WithMany(a => a.Assignees);//.UsingEntity<EmployeeTaskEnt>();
+                //    .UsingEntity(
+                //"EmployeeTask",
+                //l => l.HasOne(typeof(TaskEnt)).WithMany().HasForeignKey("TaskId").HasPrincipalKey(nameof(TaskEnt.Id)),
+                //r => r.HasOne(typeof(Employee)).WithMany().HasForeignKey("EmployeeId").HasPrincipalKey(nameof(Employee.Id)),
+                //j => j.HasKey("TaskId", "EmployeeId"));
+                e.HasMany(t => t.Meetings).WithMany(a => a.Attendees);//UsingEntity<EmployeeTaskEnt>();
+            //    .UsingEntity(
+            //"EmployeeMeeting",
+            //l => l.HasOne(typeof(Meeting)).WithMany().HasForeignKey("MeetingId").HasPrincipalKey(nameof(EmployeeTask.Models.Entities.MeetingModels.Meeting.Id)),
+            //r => r.HasOne(typeof(Employee)).WithMany().HasForeignKey("EmployeeId").HasPrincipalKey(nameof(Employee.Id)),
+            //j => j.HasKey("MeetingId", "EmployeeId"));
 
             });
 
@@ -34,22 +45,13 @@ namespace EmployeeTask.Database
                 t.HasKey(p => p.Id);
                 t.Property(p => p.Title).IsRequired();
                 t.Property(p=>p.IsCompleted).HasDefaultValue(false);
-                t.HasMany(t => t.Assignees).WithMany(a => a.AssingnedTasks);//UsingEntity<EmployeeTaskEnt>();
-                
-                //t.Property(p => p.Assignees).IsRequired();
             });
             modelBuilder.Entity<Meeting>(m =>
             {
                 m.HasKey(p => p.Id);
                 m.Property(p => p.Subject).IsRequired();
-                // m.Property(p => p.Attendees).IsRequired();
-                m.HasMany(p => p.Attendees).WithMany(a => a.AttendedMeetings).UsingEntity<EmployeeMeeting>();
             });
-
-            //modelBuilder.Entity<Meeting>()
-            //     .Property(m => m.Duration)
-            //     .HasComputedColumnSql("[EndTime] - [StartTime]");
-
+            //modelBuilder.SeedData();
         }
     }
 }
