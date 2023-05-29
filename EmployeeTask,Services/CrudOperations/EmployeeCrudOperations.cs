@@ -20,7 +20,11 @@ namespace EmployeeTask_Services.Cruds
         public ICollection<EmployeeViewModel> GetAllEmployees()
         {
 
-            var employees = _context.Employees.Select(s => s).Include(e=>e.Meetings).ToList();
+            var employees = _context.Employees
+                .Select(s => s)
+                .Include(e=>e.Meetings)
+                .Include(e => e.AssignedTasks)
+                .ToList();
             var result = _mapper.Map<List<EmployeeViewModel>>(employees);
 
             return result;
@@ -29,7 +33,10 @@ namespace EmployeeTask_Services.Cruds
         public EmployeeViewModel GetById(string id)
         {
 
-            var employee = _context.Employees.FirstOrDefault(e => e.Id == id);
+            var employee = _context.Employees
+                .Include(е => е.Meetings)
+                .Include(e => e.Meetings)
+                .FirstOrDefault(e => e.Id == id);
             var result = _mapper.Map<EmployeeViewModel>(employee);
 
             return result;

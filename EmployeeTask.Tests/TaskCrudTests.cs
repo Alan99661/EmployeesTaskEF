@@ -59,7 +59,7 @@ namespace EmployeeTask.Tests
             {
                 Title = "FirstTask",
                 Description = "Complete a Task",
-                Assignees = new List<Employee>() { employees[1] },
+                AssigneeIds = new List<string> { employees[0].Id, employees[1].Id },
                 DueDate = new DateTime(2024, 12, 03),
                 IsCompleted = false
             };
@@ -111,7 +111,7 @@ namespace EmployeeTask.Tests
             {
                 Title = "FirstTask",
                 Description = "Complete a Task",
-                Assignees = new List<Employee>() { employees[1] },
+                AssigneeIds = new List<string> { employees[0].Id, employees[1].Id },
                 DueDate = new DateTime(2024, 12, 03),
                 IsCompleted = false
             };
@@ -134,36 +134,29 @@ namespace EmployeeTask.Tests
             {
                 x.CreateMap<TaskEnt, TaskViewModel>().ReverseMap();
                 x.CreateMap<TaskEnt, TaskAddModel>().ReverseMap();
-                //x.CreateMap<Task,TaskUpdateModel>().ReverseMap();
+                x.CreateMap<Employee,EmployeeAddModel>().ReverseMap();
+                x.CreateMap<Employee, EmployeeViewModel>().ReverseMap();
             });
             Mapper mapper = new Mapper(configuration);
             TaskCrudOperations service = new TaskCrudOperations(dbContext, mapper);
+            EmployeeCrudOperations meetingCrud = new EmployeeCrudOperations(dbContext, mapper);
 
-            var employees = new List<Employee>
+            var employee = new EmployeeAddModel
             {
-                new Employee()
-                {
-                    FullName = "Dio Brando",
-                    Email = "dio@hotmail.com",
-                    Birthday = DateTime.Today,
-                    PhoneNumber = "0881238979",
-                    Salary = 500.99m,
-                },
-                new Employee()
-                {
-                    FullName = "Jotaro Kujo",
-                    Email = "jotaro@gmail.com",
-                    Birthday = DateTime.Today,
-                    PhoneNumber = "0884567890",
-                    Salary = 700.50m
-                }
+                FullName = "Dio Brando",
+                Email = "dio@hotmail.com",
+                Birthday = DateTime.Today,
+                PhoneNumber = "0881238979",
+                Salary = 500.99m,
             };
+           var EmployeeID = meetingCrud.CreateEmployee(employee).Id;
+
 
             var addmodel = new TaskAddModel()
             {
                 Title = "FirstTask",
                 Description = "Complete a Task",
-                Assignees = new List<Employee>() { employees[1] },
+                AssigneeIds = new List<string> {EmployeeID},
                 DueDate = new DateTime(2024, 12, 03),
                 IsCompleted = false
             };
@@ -172,6 +165,7 @@ namespace EmployeeTask.Tests
 
             //Assert 
             Xunit.Assert.Equal(res.Title, addmodel.Title);
+            Xunit.Assert.Equal(res.Assignees.FirstOrDefault().Id, addmodel.AssigneeIds.FirstOrDefault());
         }
         [Fact]
         public void UpdateTaskSuccesss()
@@ -185,14 +179,16 @@ namespace EmployeeTask.Tests
             {
                 x.CreateMap<TaskEnt, TaskViewModel>().ReverseMap();
                 x.CreateMap<TaskEnt, TaskAddModel>().ReverseMap();
-                x.CreateMap<Task,TaskUpdateModel>().ReverseMap();
+                x.CreateMap<Employee, EmployeeAddModel>().ReverseMap();
+                x.CreateMap<Employee, EmployeeViewModel>().ReverseMap();
             });
             Mapper mapper = new Mapper(configuration);
             TaskCrudOperations service = new TaskCrudOperations(dbContext, mapper);
+            EmployeeCrudOperations employeeCrud = new EmployeeCrudOperations(dbContext, mapper);
 
-            var employees = new List<Employee>
+            var employees = new List<EmployeeAddModel>
             {
-                new Employee()
+                new EmployeeAddModel()
                 {
                     FullName = "Dio Brando",
                     Email = "dio@hotmail.com",
@@ -200,7 +196,7 @@ namespace EmployeeTask.Tests
                     PhoneNumber = "0881238979",
                     Salary = 500.99m,
                 },
-                new Employee()
+                new EmployeeAddModel()
                 {
                     FullName = "Jotaro Kujo",
                     Email = "jotaro@gmail.com",
@@ -209,31 +205,35 @@ namespace EmployeeTask.Tests
                     Salary = 700.50m
                 }
             };
+            var id1 = employeeCrud.CreateEmployee(employees[0]).Id;
+            var id2 = employeeCrud.CreateEmployee(employees[1]).Id;
+
 
             var addmodel = new TaskAddModel()
             {
                 Title = "FirstTask",
                 Description = "Complete a Task",
-                Assignees = new List<Employee>() { employees[1] },
+                AssigneeIds = new List<string> {id1 },
                 DueDate = new DateTime(2024, 12, 03),
                 IsCompleted = false
             };
+            var res = service.CreateTask(addmodel);
             var updatemodel = new TaskUpdateModel()
             {
+                Id = res.Id,
                 Title = "FirstTAsk",
                 Description = "Complete the Task",
-                Assignees = new List<Employee>() { employees[0] },
+                AssigneeIds = new List<string>() {id1,id2},
                 DueDate = new DateTime(2023, 12, 03),
                 IsCompleted = true
             };
             //Act
-            var res = service.CreateTask(addmodel);
-            var result = service.UpdateTask(res.Id,updatemodel);
+            var result = service.UpdateTask(updatemodel);
 
             //Assert 
             Xunit.Assert.Equal(result.Title, updatemodel.Title);
             Xunit.Assert.Equal(result.IsCompleted, updatemodel.IsCompleted);
-            Xunit.Assert.Equal(result.Assignees, updatemodel.Assignees);
+            Xunit.Assert.Equal(result.Assignees.FirstOrDefault(e =>e.Id == id2).Id, updatemodel.AssigneeIds.FirstOrDefault(id => id == id2));
         }
         [Fact]
         public void DeleteTaskSuccsess()
@@ -276,21 +276,17 @@ namespace EmployeeTask.Tests
             {
                 Title = "FirstTask",
                 Description = "Complete a Task",
-                Assignees = new List<Employee>() { employees[1] },
+                AssigneeIds = new List<string> { employees[0].Id, employees[1].Id },
                 DueDate = new DateTime(2024, 12, 03),
                 IsCompleted = false
             };
-            var updatemodel = new TaskUpdateModel()
+            var res = service.CreateTask(addmodel);
+            var deletemodel = new TaskDeleteModel()
             {
-                Title = "FirstTAsk",
-                Description = "Complete the Task",
-                Assignees = new List<Employee>() { employees[0] },
-                DueDate = new DateTime(2023, 12, 03),
-                IsCompleted = true
+                Id = res.Id
             };
             //Act
-            var res = service.CreateTask(addmodel);
-            var result = service.DeleteTask(res.Id);
+            var result = service.DeleteTask(deletemodel);
 
             //Assert 
             Xunit.Assert.Equal("Success",result);

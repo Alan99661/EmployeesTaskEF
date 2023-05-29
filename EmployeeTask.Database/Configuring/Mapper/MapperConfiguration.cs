@@ -18,7 +18,7 @@ namespace EmployeeTask.Database.Configuring.Mapper
             CreateMap<Employee, EmployeeAddModel>().ReverseMap();
             CreateMap<Employee, EmployeeDeleteModel>().ReverseMap();
             CreateMap<Employee, EmployeeUpdateModel>().ReverseMap();
-            CreateMap<TaskEnt,TaskViewModel>().ReverseMap();
+            CreateMap<TaskEnt, TaskViewModel>().ReverseMap().ForMember(t => t.Assignees, opt => opt.Ignore());
             CreateMap<TaskEnt, TaskAddModel>().ReverseMap();
             CreateMap<TaskEnt, TaskUpdateModel>().ReverseMap();
             CreateMap<TaskEnt, TaskDeleteModel>().ReverseMap();
@@ -26,8 +26,6 @@ namespace EmployeeTask.Database.Configuring.Mapper
             CreateMap<Meeting,MeetingAddModel>().ReverseMap();
             CreateMap<Meeting, MeetingUpdateModel>().ReverseMap();
             CreateMap<Meeting,MeetingDeleteModel>().ReverseMap();
-
-
 
         }
     }

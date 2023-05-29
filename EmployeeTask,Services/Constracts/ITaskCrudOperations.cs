@@ -5,9 +5,9 @@ namespace EmployeeTask_Services.Constracts
     internal interface ITaskCrudOperations
     {
         TaskViewModel CreateTask(TaskAddModel addModel);
-        string DeleteTask(string id);
+        string DeleteTask(TaskDeleteModel deleteModel);
         ICollection<TaskViewModel> GetAllTasks();
         TaskViewModel GetById(string id);
-        TaskViewModel UpdateTask(string id,TaskUpdateModel updateModel);
+        TaskViewModel UpdateTask(TaskUpdateModel updateModel);
     }
 }
