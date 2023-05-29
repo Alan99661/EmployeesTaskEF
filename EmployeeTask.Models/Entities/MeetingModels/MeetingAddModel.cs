@@ -11,7 +11,7 @@ namespace EmployeeTask.Models.Entities.MeetingModels
     public class MeetingAddModel
     {
         public string Subject { get; set; }
-        public List<Employee> Attendees { get; set; }
+        public List<string> AttendeeIds { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
     }

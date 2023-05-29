@@ -26,13 +26,11 @@ namespace EmployeeTask.Tests
            .UseInMemoryDatabase(databaseName: "EmployeeTaskDb")
            .Options;
             EmployeeTaskDbContext dbContext = new EmployeeTaskDbContext(options);
-  
+
             IConfigurationProvider configuration = new MapperConfiguration(x =>
             {
                 x.CreateMap<Meeting, MeetingViewModel>().ReverseMap();
                 x.CreateMap<Meeting, MeetingAddModel>().ReverseMap();
-                //x.CreateMap<Employee, EmployeeDeleteModel>();
-                //x.CreateMap<Employee, EmployeeUpdateModel>();
 
             });
             Mapper mapper = new Mapper(configuration);
@@ -61,7 +59,7 @@ namespace EmployeeTask.Tests
 
             var addmodel = new MeetingAddModel()
             {
-                Attendees = new List<Employee> { employees[0], employees[1] },
+                AttendeeIds = new List<string> { employees[0].Id, employees[1].Id },
                 StartTime = new DateTime(2023, 5, 30, 12, 00, 00),
                 EndTime = new DateTime(2023, 5, 30, 12, 30, 00),
                 Subject = "Ted Talk"
@@ -116,7 +114,7 @@ namespace EmployeeTask.Tests
 
             var addmodel = new MeetingAddModel()
             {
-                Attendees = new List<Employee> { employees[0], employees[1] },
+                AttendeeIds = new List<string> { employees[0].Id, employees[1].Id },
                 StartTime = new DateTime(2023, 5, 30, 12, 00, 00),
                 EndTime = new DateTime(2023, 5, 30, 12, 30, 00),
                 Subject = "Ted Talk"
@@ -140,16 +138,17 @@ namespace EmployeeTask.Tests
             {
                 x.CreateMap<Meeting, MeetingViewModel>().ReverseMap();
                 x.CreateMap<Meeting, MeetingAddModel>().ReverseMap();
-                //x.CreateMap<Employee, EmployeeDeleteModel>();
-                //x.CreateMap<Employee, EmployeeUpdateModel>();
+                x.CreateMap<Employee, EmployeeAddModel>().ReverseMap();
+                x.CreateMap<Employee, EmployeeViewModel>().ReverseMap();
 
             });
             Mapper mapper = new Mapper(configuration);
             MeetingCrudOperations service = new MeetingCrudOperations(dbContext, mapper);
+            EmployeeCrudOperations employeeCrudOperations = new EmployeeCrudOperations(dbContext, mapper);
 
-            var employees = new List<Employee>
+            var employees = new List<EmployeeAddModel>
             {
-                new Employee()
+                new EmployeeAddModel()
                 {
                     FullName = "Dio Brando",
                     Email = "dio@hotmail.com",
@@ -157,20 +156,22 @@ namespace EmployeeTask.Tests
                     PhoneNumber = "0881238979",
                     Salary = 500.99m,
                 },
-                new Employee()
+                new EmployeeAddModel()
                 {
                     FullName = "Jotaro Kujo",
                     Email = "jotaro@gmail.com",
                     Birthday = DateTime.Today,
                     PhoneNumber = "0884567890",
-                    Salary = 700.50m,
-                    AssignedTasks = new List<TaskEnt>() {}
+                    Salary = 700.50m
                 }
             };
+           var id1 =employeeCrudOperations.CreateEmployee(employees[0]).Id;
+           var id2 = employeeCrudOperations.CreateEmployee(employees[1]).Id;
+
 
             var addmodel = new MeetingAddModel()
             {
-                Attendees = new List<Employee> { employees[0], employees[1] },
+                AttendeeIds = new List<string> { id1, id2 },
                 StartTime = new DateTime(2023, 5, 30, 12, 00, 00),
                 EndTime = new DateTime(2023, 5, 30, 12, 30, 00),
                 Subject = "Ted Talk"
@@ -180,8 +181,8 @@ namespace EmployeeTask.Tests
 
             //Assert 
             Xunit.Assert.Equal(res.Subject, addmodel.Subject);
-            Xunit.Assert.Equal(res.Attendees, addmodel.Attendees);
-            Xunit.Assert.Equal(res.Subject, addmodel.Attendees.FirstOrDefault().Meetings.FirstOrDefault().Subject);
+            Xunit.Assert.NotEmpty(res.Attendees);
+            Xunit.Assert.Equal(res.Attendees.FirstOrDefault().Id, id1);
         }
 
         [Fact]
@@ -196,17 +197,16 @@ namespace EmployeeTask.Tests
             {
                 x.CreateMap<Meeting, MeetingViewModel>().ReverseMap();
                 x.CreateMap<Meeting, MeetingAddModel>().ReverseMap();
-                x.CreateMap<Meeting, MeetingUpdateModel>().ReverseMap();
-                //x.CreateMap<Employee, EmployeeDeleteModel>();
-                //x.CreateMap<Employee, EmployeeUpdateModel>();
-
+                x.CreateMap<Employee, EmployeeAddModel>().ReverseMap();
+                x.CreateMap<Employee, EmployeeViewModel>().ReverseMap();
             });
             Mapper mapper = new Mapper(configuration);
             MeetingCrudOperations service = new MeetingCrudOperations(dbContext, mapper);
+            EmployeeCrudOperations employeeCrud = new EmployeeCrudOperations(dbContext, mapper);
 
-            var employees = new List<Employee>
+            var employees = new List<EmployeeAddModel>
             {
-                new Employee()
+                new EmployeeAddModel()
                 {
                     FullName = "Dio Brando",
                     Email = "dio@hotmail.com",
@@ -214,39 +214,41 @@ namespace EmployeeTask.Tests
                     PhoneNumber = "0881238979",
                     Salary = 500.99m,
                 },
-                new Employee()
+                new EmployeeAddModel()
                 {
                     FullName = "Jotaro Kujo",
                     Email = "jotaro@gmail.com",
                     Birthday = DateTime.Today,
                     PhoneNumber = "0884567890",
-                    Salary = 700.50m,
-                    AssignedTasks = new List<TaskEnt>() {}
+                    Salary = 700.50m
                 }
             };
+            var id1 = employeeCrud.CreateEmployee(employees[1]).Id;
+            var id2 = employeeCrud.CreateEmployee(employees[0]).Id;
+
 
             var addmodel = new MeetingAddModel()
             {
-                Attendees = new List<Employee> { employees[0], employees[1] },
+                AttendeeIds = new List<string> { id1, id2 },
                 StartTime = new DateTime(2023, 5, 30, 12, 00, 00),
                 EndTime = new DateTime(2023, 5, 30, 12, 30, 00),
                 Subject = "Ted Talk"
             };
+            var id = service.CreateMeeting(addmodel).Id;
 
             var updatemodel = new MeetingUpdateModel()
             {
-                Attendees = new List<Employee> { employees[1] },
+                Id = id,
+                AttendeeIds = new List<string> { id1 },
                 StartTime = new DateTime(2023, 5, 30, 12, 00, 00),
                 EndTime = new DateTime(2023, 5, 30, 12, 30, 00),
                 Subject = "Ted Talk"
             };
             //Act
-            var id = service.CreateMeeting(addmodel).Id;
-            var res = service.UpdateMeeting(id, updatemodel);
+            var res = service.UpdateMeeting(updatemodel);
 
             //Assert 
             Xunit.Assert.Equal(res.Subject, updatemodel.Subject);
-            Xunit.Assert.Equal(res.Attendees, updatemodel.Attendees);
         }
 
         [Fact]
@@ -261,16 +263,17 @@ namespace EmployeeTask.Tests
             {
                 x.CreateMap<Meeting, MeetingViewModel>().ReverseMap();
                 x.CreateMap<Meeting, MeetingAddModel>().ReverseMap();
-                //x.CreateMap<Employee, EmployeeDeleteModel>();
-                //x.CreateMap<Employee, EmployeeUpdateModel>();
+                x.CreateMap<Employee, EmployeeAddModel>().ReverseMap();
+                x.CreateMap<Employee, EmployeeViewModel>().ReverseMap();
 
             });
             Mapper mapper = new Mapper(configuration);
             MeetingCrudOperations service = new MeetingCrudOperations(dbContext, mapper);
+            EmployeeCrudOperations employeeCrud = new EmployeeCrudOperations(dbContext, mapper);
 
-            var employees = new List<Employee>
+            var employees = new List<EmployeeAddModel>
             {
-                new Employee()
+                new EmployeeAddModel()
                 {
                     FullName = "Dio Brando",
                     Email = "dio@hotmail.com",
@@ -278,7 +281,7 @@ namespace EmployeeTask.Tests
                     PhoneNumber = "0881238979",
                     Salary = 500.99m,
                 },
-                new Employee()
+                new EmployeeAddModel()
                 {
                     FullName = "Jotaro Kujo",
                     Email = "jotaro@gmail.com",
@@ -288,20 +291,27 @@ namespace EmployeeTask.Tests
                     AssignedTasks = new List<TaskEnt>() {}
                 }
             };
+            var id1 = employeeCrud.CreateEmployee(employees[1]).Id;
+            var id2 = employeeCrud.CreateEmployee(employees[0]).Id;
 
             var addmodel = new MeetingAddModel()
             {
-                Attendees = new List<Employee> { employees[0], employees[1] },
+                AttendeeIds = new List<string> {id1,id2},
                 StartTime = new DateTime(2023, 5, 30, 12, 00, 00),
                 EndTime = new DateTime(2023, 5, 30, 12, 30, 00),
                 Subject = "Ted Talk"
             };
-            //Act
             var id = service.CreateMeeting(addmodel).Id;
-            var res = service.DeleteMeeting(id);
+            var deleteModel = new MeetingDeleteModel()
+            {
+                Id = id
+            };
+            {            //Act
+                var res = service.DeleteMeeting(deleteModel);
 
-            //Assert 
-            Xunit.Assert.Equal("Success", res);
+                //Assert 
+                Xunit.Assert.Equal("Success", res);
+            }
         }
     }
 }

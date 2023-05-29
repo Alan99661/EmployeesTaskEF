@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using EmployeeTask.Models.Entities.EmpyoyeeModels;
 using EmployeeTask.Models.Entities.MeetingModels;
 using EmployeeTask.Models.Entities.TaskModels;
-using EmployeeTask.Models.Entities.JoinModels;
 using Azure;
 using EmployeeTask.Database.Configuring.Seed;
 

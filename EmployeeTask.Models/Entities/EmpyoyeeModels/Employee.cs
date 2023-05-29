@@ -1,5 +1,4 @@
 ﻿using EmployeeTask.Models.Abstactions;
-using EmployeeTask.Models.Entities.JoinModels;
 using EmployeeTask.Models.Entities.MeetingModels;
 using EmployeeTask.Models.Entities.TaskModels;
 using System;

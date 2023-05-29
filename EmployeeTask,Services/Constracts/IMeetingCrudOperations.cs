@@ -5,9 +5,9 @@ namespace EmployeeTask_Services.Constracts
     internal interface IMeetingCrudOperations
     {
         MeetingViewModel CreateMeeting(MeetingAddModel addModel);
-        string DeleteMeeting(string id);
+        string DeleteMeeting(MeetingDeleteModel deleteModel);
         ICollection<MeetingViewModel> GetAllMeetings();
         MeetingViewModel GetById(string id);
-        MeetingViewModel UpdateMeeting(string id,MeetingUpdateModel updateModel);
+        MeetingViewModel UpdateMeeting(MeetingUpdateModel updateModel);
     }
 }

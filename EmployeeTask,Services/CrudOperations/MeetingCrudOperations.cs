@@ -2,6 +2,7 @@
 using EmployeeTask.Database;
 using EmployeeTask.Models.Entities.MeetingModels;
 using EmployeeTask_Services.Constracts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,10 @@ namespace EmployeeTask_Services.Cruds
         {
             try
             {
-            var list =_context.Meeting.Select(m =>m).ToList();
+            var list =_context.Meeting
+                    .Select(m =>m)
+                    .Include(m =>m.Attendees)
+                    .ToList();
             var result =_mapper.Map<List<MeetingViewModel>>(list);
             return result;
             }
@@ -39,7 +43,9 @@ namespace EmployeeTask_Services.Cruds
         {
             try
             {
-                var meeting = _context.Meeting.FirstOrDefault(m => m.Id == id);
+                var meeting = _context.Meeting
+                    .Include(m =>m.Attendees)
+                    .FirstOrDefault(m => m.Id == id);
                 var result = _mapper.Map<MeetingViewModel>(meeting);
                 return result;
             }
@@ -52,7 +58,11 @@ namespace EmployeeTask_Services.Cruds
         {
             try
             {
+                var employees = _context.Employees
+                    .Where(e => addModel.AttendeeIds.Contains(e.Id))
+                    .ToList();
                 var meeting = _mapper.Map<Meeting> (addModel);
+                meeting.Attendees = employees;
                 _context.Meeting.Add(meeting);
                 _context.SaveChanges();
                 var result = _mapper.Map<MeetingViewModel>(meeting);
@@ -63,13 +73,16 @@ namespace EmployeeTask_Services.Cruds
                 throw new Exception("Failed");
             }
         }
-        public MeetingViewModel UpdateMeeting(string id,MeetingUpdateModel updateModel)
+        public MeetingViewModel UpdateMeeting(MeetingUpdateModel updateModel)
         {
             try
             {
-                var meeting = _context.Meeting.FirstOrDefault(x => x.Id == id);
+                var employees = _context.Employees
+                    .Where(e => updateModel.AttendeeIds.Contains(e.Id))
+                    .ToList();
+                var meeting = _context.Meeting.FirstOrDefault(x => x.Id == updateModel.Id);
 
-                meeting.Attendees = updateModel.Attendees;
+                meeting.Attendees = employees;
                 meeting.StartTime = updateModel.StartTime;
                 meeting.EndTime = updateModel.EndTime;
                 meeting.Subject = updateModel.Subject;
@@ -84,11 +97,11 @@ namespace EmployeeTask_Services.Cruds
                 throw new Exception("Failed");
             }
         }
-        public string DeleteMeeting(string id)
+        public string DeleteMeeting(MeetingDeleteModel deleteModel)
         {
             try
             {
-                var deletedEnt = _context.Meeting.FirstOrDefault(x => x.Id == id);
+                var deletedEnt = _context.Meeting.FirstOrDefault(x => x.Id == deleteModel.Id);
 
                 _context.Meeting.Remove(deletedEnt);
                 _context.SaveChanges();
