@@ -1,9 +1,0 @@
-﻿@using EmployeeTask.Models.Entities.TaskModels;
-@model TaskViewModel;
-@{
-	<p>@Model.Title</p>
-	foreach(var a in Model.Assignees)
-	{
-		<p>@a.FullName</p>
-	}
-}

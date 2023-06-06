@@ -1,0 +1,46 @@
+﻿@model MeetingAddModel;
+
+<form asp-action="CreateMeetingPost" asp-controller="Meeting" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Subject"></label>
+        <input asp-for="Subject" class="form-control" />
+        <span asp-validation-for="Subject" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="StartTime"></label>
+        <input asp-for="StartTime" class="form-control" />
+        <span asp-validation-for="StartTime" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="EndTime"></label>
+        <input asp-for="EndTime" class="form-control" />
+        <span asp-validation-for="EndTime" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AttendeeIds">Select Attendees</label>
+        <select asp-for="AttendeeIds" id="asgSelect">
+        </select>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+@section Scripts{
+    <script>
+
+        $(document).ready(function () {
+            $.ajax({
+                method: "get",
+                url: "/Employee/GetEmployeeModels",
+                success: function (data) {
+                    console.log(data);
+                    $.each(data, function (i, item) {
+                        var html = '<option value="' + data[i].id + '">' + data[i].fullName + '</option>';
+                        console.log(html);
+                        $("#asgSelect").append(html);
+                    })
+                }
+            });
+        });
+    </script>
+}

@@ -10,6 +10,7 @@ namespace EmployeeTask.MVC.Controllers
 	{
 
 		private readonly IMeetingCrudOperations operations;
+		private readonly ISelectMeetingUpdateModel selectMeetingUpdateModel;
 
 		public MeetingController(IMeetingCrudOperations operations)
 		{
@@ -18,11 +19,13 @@ namespace EmployeeTask.MVC.Controllers
 
 		public IActionResult Index()
 		{
-			return View();
+			var res = operations.GetAllMeetings();
+			return View(res);
 		}
 		public IActionResult GetById(string id)
 		{
-			return View();
+			var res = operations.GetById(id);
+			return View(res);
 		}
 		public IActionResult CreateMeeting()
 		{
@@ -31,16 +34,17 @@ namespace EmployeeTask.MVC.Controllers
 		public IActionResult CreateMeetingPost(MeetingAddModel model)
 		{
 			var task = operations.CreateMeeting(model);
-			return Redirect("/GetById/" + task.Id);
+			return Redirect("/Meeting/GetById/" + task.Id);
 		}
-		public IActionResult UpdateMeeting() 
+		public IActionResult UpdateMeeting(string id) 
 		{
-			return View();
+			var res = selectMeetingUpdateModel.SelectMeetingUpdateM(id);
+			return View(res);
 		}
 		public IActionResult UpdateMeetingPost(MeetingUpdateModel model)
 		{
 			var task = operations.UpdateMeeting(model);
-			return Redirect("/GetById/" + task.Id);
+			return Redirect("/Meeting/GetById/" + task.Id);
 		}
 		public IActionResult DeleteMeeting() 
 		{
