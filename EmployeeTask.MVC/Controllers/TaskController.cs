@@ -2,18 +2,19 @@
 using EmployeeTask_Services.Constracts;
 using EmployeeTask.Models.Entities.TaskModels;
 using System.Threading.Tasks;
+using EmployeeTask.Models.Entities.EmpyoyeeModels;
 
 namespace EmployeeTask.MVC.Controllers
 {
-	public class TaskController : Controller
+    public class TaskController : Controller
 	{
 		private readonly ITaskCrudOperations operations;
-		private readonly IEmployeeSelect getAll;
+		private readonly ISelectTaskUpdateModel getTaskUpdate;
 		
-		public TaskController(ITaskCrudOperations operations, IEmployeeSelect getAll)
+		public TaskController(ITaskCrudOperations operations, ISelectTaskUpdateModel getTaskUpdate)
 		{
 			this.operations = operations;
-			this.getAll = getAll;
+			this.getTaskUpdate = getTaskUpdate;
 		}
 
 		public IActionResult Index()
@@ -30,22 +31,20 @@ namespace EmployeeTask.MVC.Controllers
 		{
 			return View();
 		}
-		public IActionResult GetEmployeeModels()
-		{
-			List<EmployeeSelectModel> models = getAll.GetAll();
-			return Json(models);
-		}
 		public IActionResult CreateTaskPost(TaskAddModel model)
 		{
 			var task = operations.CreateTask(model);
-			return Redirect("/GetById/" + task.Id);
+			return Redirect("/Task/GetById/" + task.Id);
 		}
-		public IActionResult UpdateTask() { return View(); }
-
+		public IActionResult UpdateTask(string id)
+		{
+			var task = getTaskUpdate.SelectUpdateModel(id);
+			return View(task);
+		}
 		public IActionResult UpdateTaskPost(TaskUpdateModel model)
 		{
 			var task = operations.UpdateTask(model);
-			return Redirect(("/GetById/" + task.Id));
+			return Redirect(("/Task/GetById/" + task.Id));
 		}
 		public IActionResult DeleteTask()
 		{

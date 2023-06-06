@@ -1,8 +1,8 @@
 using EmployeeTask.Database;
 using EmployeeTask.Database.Configuring.Mapper;
 using EmployeeTask_Services.Constracts;
-using EmployeeTask_Services.CrudOperations;
 using EmployeeTask_Services.Cruds;
+using EmployeeTask_Services.InfrastructureClasses;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,8 +17,9 @@ builder.Services.AddDbContext<EmployeeTaskDbContext>(options => options.UseSqlSe
 builder.Services.AddAutoMapper(typeof(MapperConfiguration));
 builder.Services.AddScoped<IEmployeeCrudOperations, EmployeeCrudOperations>();
 builder.Services.AddScoped<ITaskCrudOperations,TaskCrudOperations>();
-builder.Services.AddScoped<IEmployeeSelect, EmployeeServiceGetAll>();
-//builder.Services.AddScoped<IMeetingCrudOperations, MeetingCrudOperations>();
+builder.Services.AddScoped<IMeetingCrudOperations, MeetingCrudOperations>();
+builder.Services.AddScoped<IEmployeeModelGetAll, EmployeeModelGetAll>();
+builder.Services.AddScoped<ISelectTaskUpdateModel, SelectTaskUpdateModel>();
 
 var app = builder.Build();
 

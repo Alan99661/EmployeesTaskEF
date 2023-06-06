@@ -8,9 +8,11 @@ namespace EmployeeTask.MVC.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeeCrudOperations operations;
-        public EmployeeController(IEmployeeCrudOperations operations)
+        private readonly IEmployeeModelGetAll getAll;
+        public EmployeeController(IEmployeeCrudOperations operations, IEmployeeModelGetAll getAll)
         {
             this.operations = operations;
+            this.getAll = getAll;
         }
         public IActionResult Index()
         {
@@ -37,8 +39,8 @@ namespace EmployeeTask.MVC.Controllers
 
         public IActionResult UpdateEmployee(string id)
         {
-           var user=operations.GetById(id);
-            return View(user);
+            var emp=operations.GetById(id);
+            return View(emp);
         }
         public IActionResult UpdateEmployeePost(EmployeeUpdateModel updateModel)
         {
@@ -53,6 +55,11 @@ namespace EmployeeTask.MVC.Controllers
         {
             operations.DeleteEmployee(deleteModel);
             return RedirectToAction("Index");
+        }
+        public IActionResult GetEmployeeModels()
+        {
+            List<EmployeeSelectModel> models = getAll.GetAll();
+            return Json(models);
         }
     }
 }
