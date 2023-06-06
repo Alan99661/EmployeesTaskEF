@@ -1,0 +1,12 @@
+﻿@using EmployeeTask.Models.Entities.TaskModels;
+@model TaskDeleteModel;
+<form asp-action="TaskDeletePost" asp-controller="Task" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Id"></label>
+        <input asp-for="Id" class="form-control" />
+        <span asp-validation-for="Id" class="text-danger"></span>
+    </div>
+    <div class="form-groyp">
+        <input type="submit" value="delete" class="btn btn-primary"/>
+    </div>
+</form>

@@ -30,14 +30,16 @@ namespace EmployeeTask.Tests
             {
                 x.CreateMap<TaskEnt, TaskViewModel>().ReverseMap();
                 x.CreateMap<TaskEnt, TaskAddModel>().ReverseMap();
-                //x.CreateMap<Task,TaskUpdateModel>().ReverseMap();
+                x.CreateMap<Employee,EmployeeAddModel>().ReverseMap();
+                x.CreateMap<Employee, EmployeeViewModel>().ReverseMap();
             });
             Mapper mapper = new Mapper(configuration);
             TaskCrudOperations service = new TaskCrudOperations(dbContext, mapper);
+            EmployeeCrudOperations employeeop = new EmployeeCrudOperations(dbContext, mapper);
 
-            var employees = new List<Employee>
+            var employees = new List<EmployeeAddModel>
             {
-                new Employee()
+                new EmployeeAddModel()
                 {
                     FullName = "Dio Brando",
                     Email = "dio@hotmail.com",
@@ -45,7 +47,7 @@ namespace EmployeeTask.Tests
                     PhoneNumber = "0881238979",
                     Salary = 500.99m,
                 },
-                new Employee()
+                new EmployeeAddModel()
                 {
                     FullName = "Jotaro Kujo",
                     Email = "jotaro@gmail.com",
@@ -54,12 +56,13 @@ namespace EmployeeTask.Tests
                     Salary = 700.50m
                 }
             };
+            var Empid = employeeop.CreateEmployee(employees[0]).Id; 
 
             var addmodel = new TaskAddModel()
             {
                 Title = "FirstTask",
                 Description = "Complete a Task",
-                AssigneeIds = new List<string> { employees[0].Id, employees[1].Id },
+                AssigneeIds = new List<string> { Empid },
                 DueDate = new DateTime(2024, 12, 03),
                 IsCompleted = false
             };

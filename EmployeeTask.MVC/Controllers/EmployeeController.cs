@@ -35,9 +35,10 @@ namespace EmployeeTask.MVC.Controllers
             return View(res);
         }
 
-        public IActionResult UpdateEmployee()
+        public IActionResult UpdateEmployee(string id)
         {
-            return View();
+           var user=operations.GetById(id);
+            return View(user);
         }
         public IActionResult UpdateEmployeePost(EmployeeUpdateModel updateModel)
         {

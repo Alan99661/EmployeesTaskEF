@@ -1,12 +1,14 @@
 ﻿@using EmployeeTask.Models.Entities.EmpyoyeeModels;
 @model ICollection<EmployeeViewModel>
 
-<h1>Employees</h1>
+<h1>Employees:</h1>
 @foreach(var obj in Model)
 {
     <p>@obj.FullName</p>
     @foreach(var meeting in obj.Meetings)
     {
         <p>@meeting.Subject</p>
+      
     }
+    <div class="btn btn-primary"><a asp-controller="employee" asp-action="updateemployee" asp-route-id="@obj.Id">Update</a></div>
 }

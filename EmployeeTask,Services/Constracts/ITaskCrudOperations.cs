@@ -2,12 +2,12 @@
 
 namespace EmployeeTask_Services.Constracts
 {
-    internal interface ITaskCrudOperations
+    public interface ITaskCrudOperations
     {
-        TaskViewModel CreateTask(TaskAddModel addModel);
-        string DeleteTask(TaskDeleteModel deleteModel);
-        ICollection<TaskViewModel> GetAllTasks();
-        TaskViewModel GetById(string id);
-        TaskViewModel UpdateTask(TaskUpdateModel updateModel);
+        public TaskViewModel CreateTask(TaskAddModel addModel);
+        public string DeleteTask(TaskDeleteModel deleteModel);
+        public ICollection<TaskViewModel> GetAllTasks();
+        public TaskViewModel GetById(string id);
+        public TaskViewModel UpdateTask(TaskUpdateModel updateModel);
     }
 }

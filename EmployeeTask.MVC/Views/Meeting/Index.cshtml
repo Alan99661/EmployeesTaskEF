@@ -1,0 +1,8 @@
+﻿@using EmployeeTask.Models.Entities.MeetingModels;
+@model ICollection<MeetingViewModel>;
+
+@foreach(var m in Model)
+{
+	<p>@m.Subject</p>
+	<p>@m.Duration</p>
+}

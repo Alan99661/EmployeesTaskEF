@@ -2,7 +2,7 @@
 
 namespace EmployeeTask_Services.Constracts
 {
-    internal interface IMeetingCrudOperations
+    public interface IMeetingCrudOperations
     {
         MeetingViewModel CreateMeeting(MeetingAddModel addModel);
         string DeleteMeeting(MeetingDeleteModel deleteModel);

@@ -14,5 +14,6 @@ namespace EmployeeTask.Models.Entities.TaskModels
         public DateTime DueDate { get; set; }
         public ICollection<string> AssigneeIds { get; set; }
         public bool IsCompleted { get; set; }
+        //public List<EmployeeSelectModel> EmployeeModels { get; set; }
     }
 }
