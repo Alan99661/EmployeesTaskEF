@@ -24,19 +24,8 @@ namespace EmployeeTask.Database
             {
                 e.HasKey(p => p.Id);
                 e.Property(p => p.FullName).IsRequired();
-                e.HasMany(t => t.AssignedTasks).WithMany(a => a.Assignees);//.UsingEntity<EmployeeTaskEnt>();
-                //    .UsingEntity(
-                //"EmployeeTask",
-                //l => l.HasOne(typeof(TaskEnt)).WithMany().HasForeignKey("TaskId").HasPrincipalKey(nameof(TaskEnt.Id)),
-                //r => r.HasOne(typeof(Employee)).WithMany().HasForeignKey("EmployeeId").HasPrincipalKey(nameof(Employee.Id)),
-                //j => j.HasKey("TaskId", "EmployeeId"));
-                e.HasMany(t => t.Meetings).WithMany(a => a.Attendees);//UsingEntity<EmployeeTaskEnt>();
-            //    .UsingEntity(
-            //"EmployeeMeeting",
-            //l => l.HasOne(typeof(Meeting)).WithMany().HasForeignKey("MeetingId").HasPrincipalKey(nameof(EmployeeTask.Models.Entities.MeetingModels.Meeting.Id)),
-            //r => r.HasOne(typeof(Employee)).WithMany().HasForeignKey("EmployeeId").HasPrincipalKey(nameof(Employee.Id)),
-            //j => j.HasKey("MeetingId", "EmployeeId"));
-
+                e.HasMany(t => t.AssignedTasks).WithMany(a => a.Assignees);
+                e.HasMany(t => t.Meetings).WithMany(a => a.Attendees);
             });
 
             modelBuilder.Entity<TaskEnt>(t =>
@@ -50,7 +39,6 @@ namespace EmployeeTask.Database
                 m.HasKey(p => p.Id);
                 m.Property(p => p.Subject).IsRequired();
             });
-            //modelBuilder.SeedData();
         }
     }
 }

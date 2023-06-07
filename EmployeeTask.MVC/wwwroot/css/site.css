@@ -18,5 +18,23 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: darkcyan;
+}
+.home-btn {
+    height: 10vh;
+    font-size: 170%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: mediumaquamarine;
+    border: 2px solid darkcyan;
+}
+    .home-btn :hover {
+        background-color: mediumaquamarine;
+    }
+.home-container{
+    height:75vh;
+    width: 50vw;
+    background-color:aliceblue;
 }
