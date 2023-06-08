@@ -33,6 +33,11 @@ namespace EmployeeTask.MVC.Controllers
 		}
 		public IActionResult CreateMeetingPost(MeetingAddModel model)
 		{
+			if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+       
 			var task = operations.CreateMeeting(model);
 			return Redirect("/Meeting/GetById/" + task.Id);
 		}
@@ -43,6 +48,11 @@ namespace EmployeeTask.MVC.Controllers
 		}
 		public IActionResult UpdateMeetingPost(MeetingUpdateModel model)
 		{
+			if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+       
 			var task = operations.UpdateMeeting(model);
 			return Redirect("/Meeting/GetById/" + task.Id);
 		}
@@ -52,6 +62,11 @@ namespace EmployeeTask.MVC.Controllers
 		}
 		public IActionResult DeleteMeetingPost(MeetingDeleteModel model)
 		{
+			if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+       
 			operations.DeleteMeeting(model);
 			return RedirectToAction("Index");
 		}

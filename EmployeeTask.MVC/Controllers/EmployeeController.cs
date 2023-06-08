@@ -26,7 +26,11 @@ namespace EmployeeTask.MVC.Controllers
         }
         public IActionResult CreateNewEmployee(EmployeeAddModel model)
         {
-            var res = operations.CreateEmployee(model);
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+                var res = operations.CreateEmployee(model);
             return Redirect("/Employee/GetById/" + res.Id);
         }
 
@@ -44,6 +48,10 @@ namespace EmployeeTask.MVC.Controllers
         }
         public IActionResult UpdateEmployeePost(EmployeeUpdateModel updateModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(updateModel);
+            }
             var res = operations.UpdateEmployee(updateModel);
             return Redirect("/Employee/GetById/" + res.Id);
         }
@@ -53,6 +61,10 @@ namespace EmployeeTask.MVC.Controllers
         }
         public IActionResult DeleteEmployeePost(EmployeeDeleteModel deleteModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(deleteModel);
+            }
             operations.DeleteEmployee(deleteModel);
             return RedirectToAction("Index");
         }

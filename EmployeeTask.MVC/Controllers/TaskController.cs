@@ -33,6 +33,11 @@ namespace EmployeeTask.MVC.Controllers
 		}
 		public IActionResult CreateTaskPost(TaskAddModel model)
 		{
+			if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+       
 			var task = operations.CreateTask(model);
 			return Redirect("/Task/GetById/" + task.Id);
 		}
@@ -43,6 +48,11 @@ namespace EmployeeTask.MVC.Controllers
 		}
 		public IActionResult UpdateTaskPost(TaskUpdateModel model)
 		{
+			if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+       
 			var task = operations.UpdateTask(model);
 			return Redirect(("/Task/GetById/" + task.Id));
 		}
@@ -52,6 +62,11 @@ namespace EmployeeTask.MVC.Controllers
 		}
 		public IActionResult DeleteTaskPost(TaskDeleteModel model)
 		{
+			if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+       
 			operations.DeleteTask(model);
 			return RedirectToAction("Index");
 		}
