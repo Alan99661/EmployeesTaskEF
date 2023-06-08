@@ -1,8 +1,31 @@
 ﻿@using EmployeeTask.Models.Entities.MeetingModels;
 @model ICollection<MeetingViewModel>;
 
-@foreach(var m in Model)
-{
-	<p>@m.Subject</p>
-	<p>@m.Duration</p>
-}
+<div class="container">
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Subject</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td>@obj.Subject</td>
+                    <td>@obj.StartTime</td>
+                    <td>@obj.EndTime</td>
+                    <td>@obj.Duration</td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-primary" href="@Url.Action("getbyid", "meeting", new { id = obj.Id })">Info</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
