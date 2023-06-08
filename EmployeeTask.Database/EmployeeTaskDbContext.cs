@@ -5,6 +5,7 @@ using EmployeeTask.Models.Entities.MeetingModels;
 using EmployeeTask.Models.Entities.TaskModels;
 using Azure;
 using EmployeeTask.Database.Configuring.Seed;
+using System.ComponentModel.DataAnnotations;
 
 namespace EmployeeTask.Database
 {
@@ -24,6 +25,7 @@ namespace EmployeeTask.Database
             {
                 e.HasKey(p => p.Id);
                 e.Property(p => p.FullName).IsRequired();
+                e.Property(p => p.Birthday).HasColumnType("date");
                 e.HasMany(t => t.AssignedTasks).WithMany(a => a.Assignees);
                 e.HasMany(t => t.Meetings).WithMany(a => a.Attendees);
             });

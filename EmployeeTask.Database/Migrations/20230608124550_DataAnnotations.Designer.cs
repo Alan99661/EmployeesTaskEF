@@ -4,6 +4,7 @@ using EmployeeTask.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeTask.Database.Migrations
 {
     [DbContext(typeof(EmployeeTaskDbContext))]
-    partial class EmployeeTaskDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230608124550_DataAnnotations")]
+    partial class DataAnnotations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace EmployeeTask.Database.Migrations
 
                     b.HasIndex("MeetingsId");
 
-                    b.ToTable("EmployeeMeeting", (string)null);
+                    b.ToTable("EmployeeMeeting");
                 });
 
             modelBuilder.Entity("EmployeeTask.Models.Entities.EmpyoyeeModels.Employee", b =>
@@ -62,7 +65,7 @@ namespace EmployeeTask.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("EmployeeTask.Models.Entities.MeetingModels.Meeting", b =>
@@ -82,7 +85,7 @@ namespace EmployeeTask.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Meeting", (string)null);
+                    b.ToTable("Meeting");
                 });
 
             modelBuilder.Entity("EmployeeTask.Models.Entities.TaskModels.TaskEnt", b =>
@@ -108,7 +111,7 @@ namespace EmployeeTask.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tasks", (string)null);
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("EmployeeTaskEnt", b =>
@@ -123,7 +126,7 @@ namespace EmployeeTask.Database.Migrations
 
                     b.HasIndex("AssigneesId");
 
-                    b.ToTable("EmployeeTaskEnt", (string)null);
+                    b.ToTable("EmployeeTaskEnt");
                 });
 
             modelBuilder.Entity("EmployeeMeeting", b =>
