@@ -35,20 +35,7 @@
 
 @section Scripts{
     <script>
-
-        $(document).ready(function () {
-            $.ajax({
-                method: "get",
-                url: "/Employee/GetEmployeeModels",
-                success: function (data) {
-                    console.log(data);
-                    $.each(data, function (i, item) {
-                        var html = '<option value="' + data[i].id + '">' + data[i].fullName + '</option>';
-                        console.log(html);
-                        $("#asgSelect").append(html);
-                    })
-                }
-            });
-        });
+        var selectid = '#asgSelect';
+        SelectEmployees(selectid);
     </script>
 }
