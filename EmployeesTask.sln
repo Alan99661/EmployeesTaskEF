@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeTask.Models", "EmployeeTask.Models\EmployeeTask.Models.csproj", "{A8B415FA-15E1-4003-A5DB-F9DD5231EFE7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeTask,Services", "EmployeeTask,Services\EmployeeTask,Services.csproj", "{BEC3D022-CF8D-4F55-A90B-BA986906AF83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeTask.Services", "EmployeeTask,Services\EmployeeTask.Services.csproj", "{BEC3D022-CF8D-4F55-A90B-BA986906AF83}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeTask.Database", "EmployeeTask.Database\EmployeeTask.Database.csproj", "{74125481-FFFC-4D22-A9BC-E4E3ACC72B74}"
 EndProject

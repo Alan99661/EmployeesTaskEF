@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EmployeeTask,Services\EmployeeTask,Services.csproj" />
+    <ProjectReference Include="..\EmployeeTask,Services\EmployeeTask.Services.csproj" />
     <ProjectReference Include="..\EmployeeTask.Database\EmployeeTask.Database.csproj" />
     <ProjectReference Include="..\EmployeeTask.Models\EmployeeTask.Models.csproj" />
   </ItemGroup>
